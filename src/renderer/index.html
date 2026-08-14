@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MashaAllah Electronics Manager</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-mark">MA</div>
+          <div>
+            <h1>MashaAllah</h1>
+            <small>Electronics Manager</small>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button data-section="dashboard" class="nav-button active">Dashboard</button>
+          <button data-section="sales" class="nav-button">Sales</button>
+          <button data-section="purchases" class="nav-button">Purchases</button>
+          <button data-section="products" class="nav-button">Products</button>
+          <button data-section="inventory" class="nav-button">Inventory</button>
+          <button data-section="customers" class="nav-button">Customers</button>
+          <button data-section="suppliers" class="nav-button">Suppliers</button>
+          <button data-section="orders" class="nav-button">Orders</button>
+          <button data-section="expenses" class="nav-button">Expenses</button>
+          <button data-section="reports" class="nav-button">Reports</button>
+          <button data-section="settings" class="nav-button">Settings</button>
+        </nav>
+      </aside>
+
+      <main class="content-area">
+        <header class="topbar">
+          <div>
+            <h2 id="page-title">Dashboard</h2>
+            <p id="shop-name">MashaAllah Electronics</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="primary" id="refresh-data">Refresh</button>
+          </div>
+        </header>
+
+        <section id="dashboard" class="page-section active">
+          <div class="stats-grid" id="dashboard-stats"></div>
+          <div class="panel">
+            <h3>Recent sales</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="recent-sales-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="sales" class="page-section">
+          <div class="two-column">
+            <div class="panel">
+              <h3>Quick Sale</h3>
+              <div class="form-row">
+                <label>Customer</label>
+                <select id="sale-customer"></select>
+              </div>
+              <div class="form-row">
+                <label>Payment Method</label>
+                <select id="sale-payment-method">
+                  <option>Cash</option>
+                  <option>Credit</option>
+                  <option>Bank Transfer</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Product</label>
+                <select id="sale-product"></select>
+              </div>
+              <div class="form-row inline-fields">
+                <div>
+                  <label>Qty</label>
+                  <input id="sale-qty" type="number" min="1" value="1" />
+                </div>
+                <div>
+                  <label>Price</label>
+                  <input id="sale-price" type="number" min="0" step="0.01" />
+                </div>
+              </div>
+              <div class="form-row">
+                <button class="primary" id="add-sale-item">Add to cart</button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3>Cart</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="sale-cart"></tbody>
+              </table>
+              <div class="totals-box">
+                <div><span>Subtotal</span><strong id="sale-subtotal">0</strong></div>
+                <div><span>Discount</span><input id="sale-discount" type="number" min="0" step="0.01" value="0" /></div>
+                <div><span>Total</span><strong id="sale-total">0</strong></div>
+              </div>
+              <div class="form-row">
+                <button class="primary" id="complete-sale">Complete Sale</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="purchases" class="page-section">
+          <div class="panel">
+            <h3>Record Purchase</h3>
+            <div class="form-grid">
+              <div>
+                <label>Supplier</label>
+                <select id="purchase-supplier"></select>
+              </div>
+              <div>
+                <label>Payment Method</label>
+                <select id="purchase-payment-method">
+                  <option>Cash</option>
+                  <option>Credit</option>
+                  <option>Bank Transfer</option>
+                </select>
+              </div>
+              <div>
+                <label>Product</label>
+                <select id="purchase-product"></select>
+              </div>
+              <div>
+                <label>Qty</label>
+                <input id="purchase-qty" type="number" min="1" value="1" />
+              </div>
+              <div>
+                <label>Unit Cost</label>
+                <input id="purchase-unit-cost" type="number" min="0" step="0.01" value="0" />
+              </div>
+              <div>
+                <label>&nbsp;</label>
+                <button class="primary" id="add-purchase-item">Add Item</button>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Unit Cost</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="purchase-cart"></tbody>
+            </table>
+            <div class="totals-box">
+              <div><span>Subtotal</span><strong id="purchase-subtotal">0</strong></div>
+              <div><span>Discount</span><input id="purchase-discount" type="number" min="0" step="0.01" value="0" /></div>
+              <div><span>Total</span><strong id="purchase-total">0</strong></div>
+            </div>
+            <div class="form-row">
+              <button class="primary" id="complete-purchase">Complete Purchase</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="products" class="page-section">
+          <div class="panel">
+            <h3>Products</h3>
+            <div class="toolbar">
+              <input id="product-search" type="search" placeholder="Search products" />
+              <button class="primary" id="add-product-btn">Add Product</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Name</th>
+                  <th>Brand</th>
+                  <th>Stock</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="products-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="inventory" class="page-section">
+          <div class="panel">
+            <h3>Inventory</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Min</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="customers" class="page-section">
+          <div class="panel">
+            <h3>Customers</h3>
+            <div class="toolbar">
+              <input id="customer-search" type="search" placeholder="Search by name or phone" />
+              <button class="primary" id="add-customer-btn">Add Customer</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Balance</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="customers-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="suppliers" class="page-section">
+          <div class="panel">
+            <h3>Suppliers</h3>
+            <div class="toolbar">
+              <input id="supplier-search" type="search" placeholder="Search suppliers" />
+              <button class="primary" id="add-supplier-btn">Add Supplier</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Balance</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="suppliers-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="orders" class="page-section">
+          <div class="panel">
+            <h3>Orders</h3>
+            <div class="toolbar">
+              <button class="primary" id="add-order-btn">Create Order</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Delivery</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="expenses" class="page-section">
+          <div class="panel">
+            <h3>Expenses</h3>
+            <div class="toolbar">
+              <button class="primary" id="add-expense-btn">Add Expense</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody id="expenses-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="reports" class="page-section">
+          <div class="panel">
+            <h3>Reports</h3>
+            <div class="form-row inline-fields">
+              <div>
+                <label>From Date</label>
+                <input id="report-from-date" type="date" />
+              </div>
+              <div>
+                <label>To Date</label>
+                <input id="report-to-date" type="date" />
+              </div>
+              <div style="display: flex; align-items: flex-end; gap: 0.5rem;">
+                <button id="report-filter-btn" class="primary">Filter</button>
+              </div>
+            </div>
+
+            <div class="report-cards">
+              <div class="mini-card">
+                <span>Total Sales</span>
+                <strong id="report-total-sales">0</strong>
+              </div>
+              <div class="mini-card">
+                <span>Purchases</span>
+                <strong id="report-total-purchases">0</strong>
+              </div>
+              <div class="mini-card">
+                <span>Expenses</span>
+                <strong id="report-total-expenses">0</strong>
+              </div>
+              <div class="mini-card">
+                <span>Profit</span>
+                <strong id="report-total-profit">0</strong>
+              </div>
+            </div>
+
+            <div class="report-tabs">
+              <button class="report-tab active" data-tab="summary">Summary</button>
+              <button class="report-tab" data-tab="products">Product Performance</button>
+              <button class="report-tab" data-tab="customers">Customer Analysis</button>
+              <button class="report-tab" data-tab="suppliers">Supplier Analysis</button>
+            </div>
+
+            <div id="report-tab-summary" class="report-tab-content active">
+              <table>
+                <tr><td>Total Transactions</td><td id="stat-total-trans">0</td></tr>
+                <tr><td>Avg Sale Value</td><td id="stat-avg-sale">0</td></tr>
+                <tr><td>Avg Purchase Value</td><td id="stat-avg-purchase">0</td></tr>
+                <tr><td>Receivables</td><td id="stat-receivables">0</td></tr>
+                <tr><td>Payables</td><td id="stat-payables">0</td></tr>
+              </table>
+            </div>
+
+            <div id="report-tab-products" class="report-tab-content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty Sold</th>
+                    <th>Revenue</th>
+                    <th>Avg Price</th>
+                  </tr>
+                </thead>
+                <tbody id="report-products-table"></tbody>
+              </table>
+            </div>
+
+            <div id="report-tab-customers" class="report-tab-content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Purchases</th>
+                    <th>Total Spent</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="report-customers-table"></tbody>
+              </table>
+            </div>
+
+            <div id="report-tab-suppliers" class="report-tab-content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Supplier</th>
+                    <th>Orders</th>
+                    <th>Total Purchased</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="report-suppliers-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="settings" class="page-section">
+          <div class="panel">
+            <h3>Shop Settings</h3>
+            <div class="form-grid settings-grid">
+              <div><label>Shop Name</label><input id="setting-shop-name" /></div>
+              <div><label>Phone</label><input id="setting-phone" /></div>
+              <div><label>Email</label><input id="setting-email" /></div>
+              <div><label>Currency</label><input id="setting-currency" value="PKR" /></div>
+              <div><label>Low Stock Threshold</label><input id="setting-low-stock" type="number" value="5" /></div>
+              <div><label>Invoice Prefix</label><input id="setting-invoice-prefix" value="INV" /></div>
+              <div class="full-width"><label>Address</label><input id="setting-address" /></div>
+              <div class="full-width"><label>Invoice Footer</label><textarea id="setting-invoice-footer"></textarea></div>
+            </div>
+            <div class="toolbar">
+              <button class="primary" id="save-settings-btn">Save Settings</button>
+              <button id="backup-btn">Backup Database</button>
+              <button id="restore-btn">Restore Database</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modal for Product Form -->
+    <div id="product-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2 id="product-modal-title">Add Product</h2>
+        <form id="product-form">
+          <input type="hidden" id="product-id" />
+          <div><label>Name *</label><input id="product-name" required /></div>
+          <div><label>SKU</label><input id="product-sku" /></div>
+          <div><label>Barcode</label><input id="product-barcode" /></div>
+          <div><label>Brand</label><input id="product-brand" /></div>
+          <div><label>Model</label><input id="product-model" /></div>
+          <div class="full-width"><label>Description</label><textarea id="product-description"></textarea></div>
+          <div><label>Unit</label><input id="product-unit" value="pcs" /></div>
+          <div><label>Purchase Price</label><input id="product-purchase-price" type="number" step="0.01" /></div>
+          <div><label>Selling Price</label><input id="product-selling-price" type="number" step="0.01" /></div>
+          <div><label>Wholesale Price</label><input id="product-wholesale-price" type="number" step="0.01" /></div>
+          <div><label>Current Stock</label><input id="product-current-stock" type="number" /></div>
+          <div><label>Minimum Stock</label><input id="product-minimum-stock" type="number" /></div>
+          <div><label>Warranty Period</label><input id="product-warranty-period" /></div>
+          <div class="modal-buttons">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" onclick="closeModal('product-modal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Customer Form -->
+    <div id="customer-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2 id="customer-modal-title">Add Customer</h2>
+        <form id="customer-form">
+          <input type="hidden" id="customer-id" />
+          <div><label>Name *</label><input id="customer-name" required /></div>
+          <div><label>Customer ID</label><input id="customer-customer-id" /></div>
+          <div><label>Phone</label><input id="customer-phone" /></div>
+          <div><label>Email</label><input id="customer-email" type="email" /></div>
+          <div class="full-width"><label>Address</label><textarea id="customer-address"></textarea></div>
+          <div class="full-width"><label>Notes</label><textarea id="customer-notes"></textarea></div>
+          <div><label>Opening Balance</label><input id="customer-opening-balance" type="number" step="0.01" /></div>
+          <div><label>Current Balance</label><input id="customer-current-balance" type="number" step="0.01" /></div>
+          <div><label>Credit Limit</label><input id="customer-credit-limit" type="number" step="0.01" /></div>
+          <div class="modal-buttons">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" onclick="closeModal('customer-modal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Supplier Form -->
+    <div id="supplier-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2 id="supplier-modal-title">Add Supplier</h2>
+        <form id="supplier-form">
+          <input type="hidden" id="supplier-id" />
+          <div><label>Name *</label><input id="supplier-name" required /></div>
+          <div><label>Supplier ID</label><input id="supplier-supplier-id" /></div>
+          <div><label>Phone</label><input id="supplier-phone" /></div>
+          <div><label>Email</label><input id="supplier-email" type="email" /></div>
+          <div><label>Contact Person</label><input id="supplier-contact-person" /></div>
+          <div class="full-width"><label>Address</label><textarea id="supplier-address"></textarea></div>
+          <div class="full-width"><label>Notes</label><textarea id="supplier-notes"></textarea></div>
+          <div><label>Current Balance</label><input id="supplier-current-balance" type="number" step="0.01" /></div>
+          <div class="modal-buttons">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" onclick="closeModal('supplier-modal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Expense Form -->
+    <div id="expense-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2>Add Expense</h2>
+        <form id="expense-form">
+          <div><label>Category *</label><input id="expense-category" required /></div>
+          <div><label>Amount *</label><input id="expense-amount" type="number" step="0.01" required /></div>
+          <div><label>Payment Method</label><input id="expense-payment-method" /></div>
+          <div class="full-width"><label>Description</label><textarea id="expense-description"></textarea></div>
+          <div><label>Date</label><input id="expense-date" type="date" /></div>
+          <div class="modal-buttons">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" onclick="closeModal('expense-modal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Order Form -->
+    <div id="order-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2>Create Order</h2>
+        <form id="order-form">
+          <div><label>Customer Name *</label><input id="order-customer-name" required /></div>
+          <div><label>Product Description *</label><textarea id="order-product-description" required></textarea></div>
+          <div><label>Delivery Date *</label><input id="order-delivery-date" type="date" required /></div>
+          <div><label>Status</label><select id="order-status"><option>pending</option><option>delivered</option><option>cancelled</option></select></div>
+          <div class="modal-buttons">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" onclick="closeModal('order-modal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
