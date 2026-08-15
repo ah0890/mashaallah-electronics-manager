@@ -99,7 +99,7 @@ class Database {
     await this.run(`
       CREATE TABLE IF NOT EXISTS settings (
         id INTEGER PRIMARY KEY CHECK (id = 1),
-        shop_name TEXT NOT NULL DEFAULT 'MashaAllah Electronics',
+        shop_name TEXT NOT NULL DEFAULT 'MS Electronics Manager',
         address TEXT,
         phone TEXT,
         email TEXT,
@@ -115,7 +115,7 @@ class Database {
 
     await this.run(`
       INSERT OR IGNORE INTO settings (id, shop_name, address, phone, email, invoice_footer, currency, tax_rate, low_stock_threshold, invoice_prefix, payment_methods, theme)
-      VALUES (1, 'MashaAllah Electronics', 'Main Market, Lahore', '+92 300 0000000', 'sales@mashaallahstore.com', 'Thank you for shopping with MashaAllah Electronics.', 'PKR', 0, 5, 'INV', 'Cash,Credit,Bank Transfer', 'light');
+      VALUES (1, 'MS Electronics Manager', 'Main Market, Lahore', '+92 300 0000000', 'sales@mashaallahstore.com', 'Thank you for shopping with MS Electronics Manager.', 'PKR', 0, 5, 'INV', 'Cash,Credit,Bank Transfer', 'light');
     `);
 
     await this.run(`
@@ -590,7 +590,7 @@ class Database {
     const grossProfit = salesRevenue - costOfGoods;
 
     return {
-      shopName: settings?.shop_name || 'MashaAllah Electronics',
+      shopName: settings?.shop_name || 'MS Electronics Manager',
       todaySales: salesRevenue,
       todayPurchases: Number(purchasesToday?.total || 0),
       todayProfit: grossProfit - Number(expensesToday?.total || 0),

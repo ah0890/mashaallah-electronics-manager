@@ -94,21 +94,22 @@ function setPage(section) {
 function renderDashboard() {
   const summary = state.dashboard || {};
   const cards = [
-    { label: "Today's Sales", value: toMoney(summary.todaySales) },
-    { label: "Today's Purchases", value: toMoney(summary.todayPurchases) },
-    { label: "Today's Profit", value: toMoney(summary.todayProfit) },
-    { label: 'Total Products', value: summary.totalProducts || 0 },
-    { label: 'Low Stock Products', value: summary.lowStockProducts || 0 },
-    { label: 'Out of Stock Products', value: summary.outOfStockProducts || 0 },
-    { label: 'Total Customers', value: summary.totalCustomers || 0 },
-    { label: 'Customer Receivables', value: toMoney(summary.customerReceivables) },
-    { label: 'Supplier Payables', value: toMoney(summary.supplierPayables) },
-    { label: 'Pending Orders', value: summary.pendingOrders || 0 },
-    { label: "Today's Expenses", value: toMoney(summary.todayExpenses) }
+    { label: "Today's Sales", value: toMoney(summary.todaySales), icon: '\u{1F4B0}', type: 'primary' },
+    { label: "Today's Purchases", value: toMoney(summary.todayPurchases), icon: '\u{1F6D2}', type: 'muted' },
+    { label: "Today's Profit", value: toMoney(summary.todayProfit), icon: '\u{1F4C8}', type: (summary.todayProfit || 0) >= 0 ? 'success' : 'danger' },
+    { label: 'Total Products', value: summary.totalProducts || 0, icon: '\u{1F4E6}', type: 'primary' },
+    { label: 'Low Stock Products', value: summary.lowStockProducts || 0, icon: '⚠️', type: 'warning' },
+    { label: 'Out of Stock Products', value: summary.outOfStockProducts || 0, icon: '⛔', type: 'danger' },
+    { label: 'Total Customers', value: summary.totalCustomers || 0, icon: '\u{1F465}', type: 'primary' },
+    { label: 'Customer Receivables', value: toMoney(summary.customerReceivables), icon: '\u{1F4B5}', type: 'success' },
+    { label: 'Supplier Payables', value: toMoney(summary.supplierPayables), icon: '\u{1F4B3}', type: 'danger' },
+    { label: 'Pending Orders', value: summary.pendingOrders || 0, icon: '\u{1F9FE}', type: 'primary' },
+    { label: "Today's Expenses", value: toMoney(summary.todayExpenses), icon: '\u{1F4B8}', type: 'warning' }
   ];
 
   elements.dashboardStats.innerHTML = cards.map((card) => `
-    <div class="stat-card">
+    <div class="stat-card stat-${card.type}">
+      <div class="stat-card-icon">${card.icon}</div>
       <span>${card.label}</span>
       <strong>${card.value}</strong>
     </div>
@@ -358,6 +359,14 @@ async function loadReportData() {
   `).join('');
 }
 
+async function endOfDaySummary() {
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('report-from-date').value = today;
+  document.getElementById('report-to-date').value = today;
+  await loadReportData();
+  document.getElementById('report-range-label').textContent = `End of Day Summary — ${formatDate(today)}`;
+}
+
 async function loadData() {
   const [dashboard, reportSummary, products, customers, suppliers, inventory, sales, purchases, expenses, orders, settings] = await Promise.all([
     window.api.getDashboardSummary(),
@@ -385,7 +394,7 @@ async function loadData() {
   state.orders = orders || [];
   state.settings = settings || {};
 
-  elements.shopName.textContent = settings?.shop_name || 'MashaAllah Electronics';
+  elements.shopName.textContent = settings?.shop_name || 'MS Electronics Manager';
   renderDashboard();
   renderSaleCustomerOptions();
   renderSaleProducts();
@@ -398,14 +407,14 @@ async function loadData() {
   renderOrders();
   renderExpenses();
 
-  elements.settingShopName.value = settings?.shop_name || 'MashaAllah Electronics';
+  elements.settingShopName.value = settings?.shop_name || 'MS Electronics Manager';
   elements.settingPhone.value = settings?.phone || '';
   elements.settingEmail.value = settings?.email || '';
   elements.settingCurrency.value = settings?.currency || 'PKR';
   elements.settingLowStock.value = settings?.low_stock_threshold || 5;
   elements.settingInvoicePrefix.value = settings?.invoice_prefix || 'INV';
   elements.settingAddress.value = settings?.address || '';
-  elements.settingInvoiceFooter.value = settings?.invoice_footer || 'Thank you for shopping with MashaAllah Electronics.';
+  elements.settingInvoiceFooter.value = settings?.invoice_footer || 'Thank you for shopping with MS Electronics Manager.';
 
   await loadReportData();
 }
@@ -695,6 +704,8 @@ function attachEvents() {
     attachClick('add-expense-btn', addExpense);
     attachClick('add-order-btn', createOrder);
     attachClick('report-filter-btn', loadReportData);
+    attachClick('end-of-day-btn', endOfDaySummary);
+    attachClick('print-report-btn', () => window.print());
 
     // Element-based listeners
     if (elements.productSearch) elements.productSearch.addEventListener('input', renderProducts);

@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MashaAllah Electronics Manager</title>
+    <title>MS Electronics Manager</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="app-shell">
       <aside class="sidebar">
         <div class="brand-block">
-          <div class="brand-mark">MA</div>
+          <div class="brand-mark">MS</div>
           <div>
-            <h1>MashaAllah</h1>
-            <small>Electronics Manager</small>
+            <h1>MS Electronics</h1>
+            <small>Manager</small>
           </div>
         </div>
 
@@ -36,7 +36,7 @@
         <header class="topbar">
           <div>
             <h2 id="page-title">Dashboard</h2>
-            <p id="shop-name">MashaAllah Electronics</p>
+            <p id="shop-name">MS Electronics Manager</p>
           </div>
           <div class="topbar-actions">
             <button class="primary" id="refresh-data">Refresh</button>
@@ -316,8 +316,11 @@
               </div>
               <div style="display: flex; align-items: flex-end; gap: 0.5rem;">
                 <button id="report-filter-btn" class="primary">Filter</button>
+                <button id="end-of-day-btn" class="primary">End of Day Summary</button>
+                <button id="print-report-btn" type="button">Print</button>
               </div>
             </div>
+            <p id="report-range-label" class="muted"></p>
 
             <div class="report-cards">
               <div class="mini-card">

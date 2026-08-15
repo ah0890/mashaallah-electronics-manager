@@ -17,7 +17,7 @@
     "desktop",
     "offline"
   ],
-  "author": "MashaAllah Electronics",
+  "author": "MS Electronics Manager",
   "license": "MIT",
   "dependencies": {
     "sqlite3": "^5.1.7"
@@ -27,8 +27,8 @@
     "electron-builder": "^24.13.0"
   },
   "build": {
-    "appId": "com.mashaallah.electronics.manager",
-    "productName": "MashaAllah Electronics Manager",
+    "appId": "com.ms.electronics.manager",
+    "productName": "MS Electronics Manager",
     "directories": {
       "output": "dist"
     },

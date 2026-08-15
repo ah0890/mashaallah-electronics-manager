@@ -1,6 +1,6 @@
-# MashaAllah Electronics Manager
+# MS Electronics Manager
 
-MashaAllah Electronics Manager is an offline-first desktop application for managing an electronics store in Pakistan. It is designed for a single shop environment and runs locally on Windows without requiring internet access for daily operations.
+MS Electronics Manager is an offline-first desktop application for managing an electronics store in Pakistan. It is designed for a single shop environment and runs locally on Windows without requiring internet access for daily operations.
 
 ## Project overview
 
@@ -19,9 +19,9 @@ The application helps the shop owner or store staff manage:
 
 ## Branding
 
-- Application name: MashaAllah Electronics Manager
-- Short brand: MA Electronics Manager
-- Default shop name: MashaAllah Electronics
+- Application name: MS Electronics Manager
+- Short brand: MS Electronics Manager
+- Default shop name: MS Electronics Manager
 - Currency: PKR / Rs.
 
 ## Architecture
@@ -180,4 +180,4 @@ The application uses SQLite transactions and local backup files to reduce risk o
 
 ## Notes
 
-This is a practical offline management app designed for MashaAllah Electronics, with a clean structure suitable for future expansion into more detailed modules and reporting.
+This is a practical offline management app designed for MS Electronics, with a clean structure suitable for future expansion into more detailed modules and reporting.

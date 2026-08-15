@@ -2,6 +2,11 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('node:path');
 const { database } = require('./db/database');
 
+const gotSingleInstanceLock = app.requestSingleInstanceLock();
+if (!gotSingleInstanceLock) {
+  app.quit();
+}
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1500,
@@ -9,6 +14,7 @@ function createWindow() {
     minWidth: 1200,
     minHeight: 800,
     backgroundColor: '#f4f7fb',
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -18,6 +24,11 @@ function createWindow() {
 
   win.loadFile(path.join(__dirname, 'renderer', 'index.html'));
   win.setMenuBarVisibility(false);
+
+  win.once('ready-to-show', () => {
+    win.show();
+    win.focus();
+  });
 }
 
 async function initializeApp() {
@@ -30,6 +41,14 @@ async function initializeApp() {
     }
   });
 }
+
+app.on('second-instance', () => {
+  const [existingWindow] = BrowserWindow.getAllWindows();
+  if (existingWindow) {
+    if (existingWindow.isMinimized()) existingWindow.restore();
+    existingWindow.focus();
+  }
+});
 
 ipcMain.handle('db:getDashboardSummary', async () => database.getDashboardSummary());
 ipcMain.handle('db:getReportSummary', async (_, args) => database.getReportSummary(args?.fromDate, args?.toDate));

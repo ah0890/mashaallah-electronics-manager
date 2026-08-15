@@ -2,7 +2,7 @@
 
 ## Goal
 
-This project is a local-only electronics store management system for MashaAllah Electronics. It is designed for use on a single Windows desktop without internet access.
+This project is a local-only electronics store management system for MS Electronics. It is designed for use on a single Windows desktop without internet access.
 
 ## Stack
 
